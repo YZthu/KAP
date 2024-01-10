@@ -18,8 +18,8 @@ labels = ["B1", "B2", "B3"]
 if ~exist('Detected_Events', 'dir')
     mkdir('Detected_Events')
 end
-if ~exist('FFT_features', 'dir')
-    mkdir('FFT_features')
+if ~exist('Detected_Events', 'dir')
+    mkdir('Detected_Events')
 end
 
 for bottle= labels
