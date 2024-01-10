@@ -25,14 +25,11 @@ function Event_detection(signal_data, noise_data, varType, dataset_key)
     threshold = 200;
 
     [events, eventStartIndices, ~, eventStartIdxArray, eventStopIdxArray, ~, ~, ~, ~, ~] = SEDetection_geo(signal_data, noise_data, threshold, windowSize);
-    [filteredStart, filteredStop] = filterEventsByDuration(eventStartIdxArray, eventStopIdxArray, min_event_duration);
 
-    disp(length(filteredStart)+"tt:"+varType);
+    filteredEvents = cell(length(eventStartIdxArray), 1);
+    for i = 1:length(eventStartIdxArray)
 
-    filteredEvents = cell(length(filteredStart), 1);
-    for i = 1:length(filteredStart)
-
-        event_data = signal_data(filteredStart(i):filteredStop(i));
+        event_data = signal_data(eventStartIdxArray(i):eventStopIdxArray(i));
 
 
         filteredEvents{i} = event_data;

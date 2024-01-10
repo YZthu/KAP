@@ -25,31 +25,14 @@ function Event_detection_and_fft_extraction(signal_data, noise_data, varType, da
     threshold = 200;
 
     [events, eventStartIndices, ~, eventStartIdxArray, eventStopIdxArray, ~, ~, ~, ~, ~] = SEDetection_geo(signal_data, noise_data, threshold, windowSize);
-    [filteredStart, filteredStop] = filterEventsByDuration(eventStartIdxArray, eventStopIdxArray, min_event_duration);
-
-    disp(length(filteredStart)+"tt:"+varType);
-    % figure;
-    % plot(signal_data); hold on;
-    % scatter(eventStartIdxArray, signal_data(eventStartIdxArray), 'r', 'Marker', 'o'); % Display start points
-    % scatter(eventStopIdxArray, signal_data(eventStopIdxArray), 'k', 'Marker', 'x');  % Display end points
-    % hold off;
-    % title([varType ' with Detected Events']);
-    % 
-    % figure;
-    % plot(signal_data); hold on;
-    % scatter(filteredStart, signal_data(filteredStart), 'g', 'Marker', 'o');
-    % scatter(filteredStop, signal_data(filteredStop), 'm', 'Marker', 'x');
-    % hold off;
-    % title([varType ' with Filtered Events']);
-
     %Sampling rate for fft
     FS = 2350;
     
     % Perform FFT on the filtered events using performFFT
     fft_results = [];
-    for i = 1:length(filteredStart)
-        startIndex = filteredStart(i);
-        endIndex = filteredStop(i);
+    for i = 1:length(eventStartIdxArray)
+        startIndex = eventStartIdxArray(i);
+        endIndex = eventStopIdxArray(i);
         fft_result = performFFT(signal_data, startIndex, endIndex, FS);
         % figure;
         % plot(fft_result);
